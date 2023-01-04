@@ -17,6 +17,7 @@ RM := rm -rf
 -include Core/test/Unity/subdir.mk
 -include Core/test/subdir.mk
 -include Core/middleware/subdir.mk
+-include Core/drivers/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
 -include objects.mk

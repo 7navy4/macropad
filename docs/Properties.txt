@@ -1,0 +1,3 @@
+- Tuşa basıldığı anda tuş yazar 
+- x ms boyunca basılı tutulursa ve başka bir tuşa basılmazsa y ms aralıkla sürekli tuşa basılmış olur  
+- Bir tuşa basılıyken x'ms süreden önce başka bir tuşa basılırsa diğer tuş yazılır ve önceki basılan tuş işlevsiz kalır. en son basılan tuş yeni basılmış bir tuş işlevinde olur .
