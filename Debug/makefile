@@ -14,9 +14,6 @@ RM := rm -rf
 -include Middlewares/ST/STM32_USB_Device_Library/Core/Src/subdir.mk
 -include Middlewares/ST/STM32_USB_Device_Library/Class/HID/Src/subdir.mk
 -include Drivers/STM32F1xx_HAL_Driver/Src/subdir.mk
--include Core/test/Unity/subdir.mk
--include Core/test/subdir.mk
--include Core/middleware/subdir.mk
 -include Core/drivers/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
