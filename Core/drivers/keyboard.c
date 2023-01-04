@@ -8,6 +8,15 @@
 
 #include "keyboard.h"
 
+
+extern USBD_HandleTypeDef hUsbDeviceFS;
+
+keyboardHID keyboardhid = {0,0,0,0,0,0,0,0};
+
+
+
+
+
 static uint16_t rowPin[RowNumber]={PinRow1,PinRow2,PinRow3};
 static uint16_t columnPin[ColumnNumber]={PinColumn1,PinColumn2,PinColumn3,PinColumn4};
 static GPIO_TypeDef *rowPort[RowNumber]={PortRow1,PortRow2,PortRow1};

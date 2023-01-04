@@ -11,6 +11,29 @@
 #include "main.h"
 
 
+#define SetOut			GPIO_PIN_SET
+#define ResetOut		GPIO_PIN_RESET
+
+#define PortRow1			GPIOB
+#define PortRow2			GPIOB
+#define PortRow3			GPIOB
+
+#define PortColumn1			GPIOA
+#define PortColumn2			GPIOB
+#define PortColumn3			GPIOA
+#define PortColumn4			GPIOB
+
+#define PinRow1				GPIO_PIN_2
+#define PinRow2				GPIO_PIN_10
+#define PinRow3				GPIO_PIN_11
+
+#define PinColumn1			GPIO_PIN_7
+#define PinColumn2			GPIO_PIN_0
+#define PinColumn3			GPIO_PIN_6
+#define PinColumn4			GPIO_PIN_1
+
+
+
 
 
 #endif /* PORT_H_ */

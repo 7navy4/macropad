@@ -61,12 +61,7 @@ static void MX_I2C1_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-extern USBD_HandleTypeDef hUsbDeviceFS;
 
-
-
-
-keyboardHID keyboardhid = {0,0,0,0,0,0,0,0};
 
 /* USER CODE END 0 */
 

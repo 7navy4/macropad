@@ -1,4 +1,4 @@
-../Core/drivers/keyboard.c:16:15:rowread	16	static
-../Core/drivers/keyboard.c:20:6:setcolumn	24	static
-../Core/drivers/keyboard.c:27:6:resetcolumn	16	static
-../Core/drivers/keyboard.c:31:9:scan	24	static
+../Core/drivers/keyboard.c:25:15:rowread	16	static
+../Core/drivers/keyboard.c:29:6:setcolumn	24	static
+../Core/drivers/keyboard.c:36:6:resetcolumn	16	static
+../Core/drivers/keyboard.c:40:9:scan	24	static

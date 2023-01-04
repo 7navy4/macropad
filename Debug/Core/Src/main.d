@@ -36,6 +36,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h \
  C:/Users/Furkan/STM32CubeIDE/workspace_1.10.1/macropad/Core/drivers/keyboard.h \
  C:/Users/Furkan/STM32CubeIDE/workspace_1.10.1/macropad/Core/drivers/port.h \
+ C:/Users/Furkan/STM32CubeIDE/workspace_1.10.1/macropad/Core/drivers/port.h \
  C:/Users/Furkan/STM32CubeIDE/workspace_1.10.1/macropad/Core/drivers/fonts.h \
  C:/Users/Furkan/STM32CubeIDE/workspace_1.10.1/macropad/Core/drivers/ssd1306.h \
  C:/Users/Furkan/STM32CubeIDE/workspace_1.10.1/macropad/Core/drivers/fonts.h
@@ -76,6 +77,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h:
 ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h:
 C:/Users/Furkan/STM32CubeIDE/workspace_1.10.1/macropad/Core/drivers/keyboard.h:
+C:/Users/Furkan/STM32CubeIDE/workspace_1.10.1/macropad/Core/drivers/port.h:
 C:/Users/Furkan/STM32CubeIDE/workspace_1.10.1/macropad/Core/drivers/port.h:
 C:/Users/Furkan/STM32CubeIDE/workspace_1.10.1/macropad/Core/drivers/fonts.h:
 C:/Users/Furkan/STM32CubeIDE/workspace_1.10.1/macropad/Core/drivers/ssd1306.h:
