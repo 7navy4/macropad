@@ -37,8 +37,8 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  C:/Users/Furkan/STM32CubeIDE/workspace_1.10.1/macropad/Core/drivers/keyboard.h \
  C:/Users/Furkan/STM32CubeIDE/workspace_1.10.1/macropad/Core/drivers/port.h \
  C:/Users/Furkan/STM32CubeIDE/workspace_1.10.1/macropad/Core/drivers/port.h \
- C:/Users/Furkan/STM32CubeIDE/workspace_1.10.1/macropad/Core/drivers/fonts.h \
  C:/Users/Furkan/STM32CubeIDE/workspace_1.10.1/macropad/Core/drivers/ssd1306.h \
+ C:/Users/Furkan/STM32CubeIDE/workspace_1.10.1/macropad/Core/drivers/fonts.h \
  C:/Users/Furkan/STM32CubeIDE/workspace_1.10.1/macropad/Core/drivers/fonts.h
 ../Core/Inc/main.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
@@ -79,6 +79,6 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 C:/Users/Furkan/STM32CubeIDE/workspace_1.10.1/macropad/Core/drivers/keyboard.h:
 C:/Users/Furkan/STM32CubeIDE/workspace_1.10.1/macropad/Core/drivers/port.h:
 C:/Users/Furkan/STM32CubeIDE/workspace_1.10.1/macropad/Core/drivers/port.h:
-C:/Users/Furkan/STM32CubeIDE/workspace_1.10.1/macropad/Core/drivers/fonts.h:
 C:/Users/Furkan/STM32CubeIDE/workspace_1.10.1/macropad/Core/drivers/ssd1306.h:
+C:/Users/Furkan/STM32CubeIDE/workspace_1.10.1/macropad/Core/drivers/fonts.h:
 C:/Users/Furkan/STM32CubeIDE/workspace_1.10.1/macropad/Core/drivers/fonts.h:

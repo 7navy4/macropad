@@ -26,13 +26,17 @@
 #include "keyboard.h"
 #include "port.h"
 
-#include "fonts.h"
+
 #include "ssd1306.h"
+#include "fonts.h"
+
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 
+uint8_t test=0;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -56,12 +60,10 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_I2C1_Init(void);
 /* USER CODE BEGIN PFP */
-
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
 
 /* USER CODE END 0 */
 
@@ -96,24 +98,29 @@ int main(void)
   MX_USB_DEVICE_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
- /* SSD1306_Init();
-  char snum[5];
 
-  SSD1306_GotoXY (0,0);
-  SSD1306_Puts ("NIZAR", &Font_11x18, 1);
-  SSD1306_GotoXY (0, 30);
-  SSD1306_Puts ("MOHIDEEN", &Font_11x18, 1);
-  SSD1306_UpdateScreen();
-  HAL_Delay (1000);
+  if (ssd1306_Init(&hi2c1) != 0) {
+    Error_Handler();
+  }
+  HAL_Delay(1000);
 
-  SSD1306_ScrollRight(0,7);
-  HAL_Delay(3000);
-  SSD1306_ScrollLeft(0,7);
-  HAL_Delay(3000);
-  SSD1306_Stopscroll();
-  SSD1306_Clear();
-  SSD1306_GotoXY (35,0);
-  SSD1306_Puts ("SCORE", &Font_11x18, 1);*/
+  ssd1306_Fill(Black);
+  ssd1306_UpdateScreen(&hi2c1);
+  HAL_Delay(1000);
+
+  // Write data to local screenbuffer
+  ssd1306_SetCursor(0, 0);
+  ssd1306_WriteString("12345678912345", Font_11x18, White);
+
+  ssd1306_UpdateScreen(&hi2c1);
+
+  ssd1306_SetCursor(0, 36);
+  ssd1306_WriteString("4ilo", Font_11x18, White);
+
+  ssd1306_UpdateScreen(&hi2c1);
+
+
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -133,30 +140,8 @@ int main(void)
 
 
 	 scanNumberTest=scan();
-			  /*
-	  for ( int x = 1; x <= 10000 ; x++ )
-	  	{
-	  		itoa(x, snum, 10);
-	  		SSD1306_GotoXY (0, 30);
-	  		SSD1306_Puts ("             ", &Font_16x26, 1);
-	  		SSD1306_UpdateScreen();
-	  		if(x < 10) {
-	  			SSD1306_GotoXY (53, 30);  // 1 DIGIT
-	  		}
-	  		else if (x < 100 ) {
-	  			SSD1306_GotoXY (45, 30);  // 2 DIGITS
-	  		}
-	  		else if (x < 1000 ) {
-	  			SSD1306_GotoXY (37, 30);  // 3 DIGITS
-	  		}
-	  		else {
-	  			SSD1306_GotoXY (30, 30);  // 4 DIGIS
-	  		}
-	  		SSD1306_Puts (snum, &Font_16x26, 1);
-	  		SSD1306_UpdateScreen();
-	  		HAL_Delay (500);
-	  	    }
-*/
+
+
 	  //push left shift a and b at the same time
 /*	  keyboardhid.MODIFIER=0x02; //Left Shift
 	  keyboardhid.KEYKODE1=0x04;//press 'a'
@@ -262,43 +247,34 @@ static void MX_I2C1_Init(void)
   */
 static void MX_GPIO_Init(void)
 {
-  GPIO_InitTypeDef GPIO_InitStruct = {0};
 
   /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOD_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6|GPIO_PIN_7, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0|GPIO_PIN_1, GPIO_PIN_RESET);
-
-  /*Configure GPIO pins : PA6 PA7 */
-  GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_7;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : PB0 PB1 */
-  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : PB2 PB10 PB11 */
-  GPIO_InitStruct.Pin = GPIO_PIN_2|GPIO_PIN_10|GPIO_PIN_11;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 }
 
 /* USER CODE BEGIN 4 */
+/*
+void HAL_GPIO_EXTI_Calback(uint16_t GPIO_Pin){
 
+	if(GPIO_Pin == GPIO_PIN_8){
+					test++;
+		}if(GPIO_Pin == GPIO_PIN_15){
+			test++;
+}if(GPIO_Pin == GPIO_PIN_14){
+	test++;
+}if(GPIO_Pin == GPIO_PIN_13){
+	test++;
+}
+}*/
+/*void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+    if(GPIO_Pin == GPIO_PIN_9) // If The INT Source Is EXTI Line9 (A9 Pin)
+    {
+
+    }
+}*/
 /* USER CODE END 4 */
 
 /**
