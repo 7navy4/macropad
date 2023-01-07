@@ -36,7 +36,7 @@
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 
-uint8_t test=0;
+uint32_t test;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -45,7 +45,7 @@ uint8_t test=0;
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-uint8_t scanNumberTest;
+uint8_t scanNumberTest,asdfasdfsadf;
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -119,7 +119,8 @@ int main(void)
 
   ssd1306_UpdateScreen(&hi2c1);
 
-
+  asdfasdfsadf=0;
+  test=0;
 
   /* USER CODE END 2 */
 
@@ -275,26 +276,19 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-/*
-void HAL_GPIO_EXTI_Calback(uint16_t GPIO_Pin){
 
-	if(GPIO_Pin == GPIO_PIN_8){
-					test++;
-		}if(GPIO_Pin == GPIO_PIN_15){
-			test++;
-}if(GPIO_Pin == GPIO_PIN_14){
-	test++;
-}if(GPIO_Pin == GPIO_PIN_13){
-	test++;
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
+
+		if(GPIO_Pin == GPIO_PIN_8){
+						test++;
+			}if(GPIO_Pin == GPIO_PIN_15){
+				test++;
+	}if(GPIO_Pin == GPIO_PIN_14){
+		test++;
+	}if(GPIO_Pin == GPIO_PIN_13){
+		test++;
+	}
 }
-}*/
-/*void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
-{
-    if(GPIO_Pin == GPIO_PIN_9) // If The INT Source Is EXTI Line9 (A9 Pin)
-    {
-
-    }
-}*/
 /* USER CODE END 4 */
 
 /**

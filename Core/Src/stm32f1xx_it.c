@@ -30,7 +30,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+extern uint32_t test;
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
