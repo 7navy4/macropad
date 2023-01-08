@@ -27,23 +27,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  11 .ARM.attributes 00000029  00000000  00000000  0002018c  2**0
                   CONTENTS, READONLY
- 12 .debug_info   0000fddd  00000000  00000000  000201b5  2**0
+ 12 .debug_info   0001025f  00000000  00000000  000201b5  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_abbrev 00002e15  00000000  00000000  0002ff92  2**0
+ 13 .debug_abbrev 00002ee2  00000000  00000000  00030414  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_aranges 00000d78  00000000  00000000  00032da8  2**3
+ 14 .debug_aranges 00000d80  00000000  00000000  000332f8  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_ranges 00000c20  00000000  00000000  00033b20  2**3
+ 15 .debug_ranges 00000c28  00000000  00000000  00034078  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  00019d8c  00000000  00000000  00034740  2**0
+ 16 .debug_macro  00019d8c  00000000  00000000  00034ca0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   0001266e  00000000  00000000  0004e4cc  2**0
+ 17 .debug_line   00012692  00000000  00000000  0004ea2c  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    00087223  00000000  00000000  00060b3a  2**0
+ 18 .debug_str    00087236  00000000  00000000  000610be  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000050  00000000  00000000  000e7d5d  2**0
+ 19 .comment      00000050  00000000  00000000  000e82f4  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00003554  00000000  00000000  000e7db0  2**2
+ 20 .debug_frame  00003578  00000000  00000000  000e8344  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -1129,10 +1129,10 @@ Infinite_Loop:
 	...
 
 08000660 <rowread>:
-static uint16_t rowPin[RowNumber]={PinRow1,PinRow2,PinRow3};
-static uint16_t columnPin[ColumnNumber]={PinColumn1,PinColumn2,PinColumn3,PinColumn4};
-static GPIO_TypeDef *rowPort[RowNumber]={PortRow1,PortRow2,PortRow1};
-static GPIO_TypeDef *columnPort[ColumnNumber]={PortColumn1,PortColumn2,PortColumn3,PortColumn4};
+
+
+
+
 
 GPIO_PinState rowread(uint8_t rowNumber){
  8000660:	b580      	push	{r7, lr}

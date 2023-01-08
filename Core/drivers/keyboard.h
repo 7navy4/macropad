@@ -18,6 +18,61 @@
 
 
 
+typedef enum key{
+	KeyA = 0x04,
+	KeyB,
+	KeyC,
+	KeyD,
+	KeyE,
+	KeyF,
+	KeyG,
+	KeyH,
+	KeyI,
+	KeyJ,
+	KeyK,
+	KeyL,
+	KeyM,
+	KeyN,
+	KeyO,
+	KeyP,
+	KeyQ,
+	KeyR,
+	KeyS,
+	KeyT,
+	KeyU,
+	KeyV,
+	KeyW,
+	KeyX,
+	KeyY,
+	KeyZ,
+	KeyEnter =	0x28,
+	KeyESC,
+	KeyDel,
+	KeyTab,
+	KeySpace,
+	KeyF1	=	0x3A,
+	KeyF2,
+	KeyF3,
+	KeyF4,
+	KeyF5,
+	KeyF6,
+	KeyF7,
+	KeyF8,
+	KeyF9,
+	KeyF10,
+	KeyF11,
+	KeyF12,
+	Ralt	=	0b01000000,
+	Rshift 	= 	0b00100000,
+	Rctrl	=	0b00010000,
+	Lalt	=	0b00000100,
+	Lshift	=	0b00000010,
+	Lctrl	=	0b00000001
+
+};
+
+
+
 
 
 typedef struct
@@ -33,19 +88,10 @@ typedef struct
 }keyboardHID;
 
 
-
-
-
-typedef struct{
-
-
-}Keyboard_HandleTypedef;
-
-
-
 GPIO_PinState rowread(uint8_t rowNumber);
 void setcolumn(uint8_t columnNumber);
 void resetcolumn(uint8_t columnNumber);
 uint8_t scan(void);
+void keystroke(uint8_t key, uint8_t modifier);
 
 #endif /* KEYBOARD_H_ */

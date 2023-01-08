@@ -131,7 +131,7 @@ int main(void)
 
 
 	 scanNumberTest=scan();
-
+/*
 
 	  //push left shift a and b at the same time
 	  keyboardhid.KEYKODE1=0x05;//press 'a'
@@ -139,7 +139,7 @@ int main(void)
 	  HAL_Delay(50);
 	  keyboardhid.KEYKODE1=0x00;//release key
 	  USBD_HID_SendReport(&hUsbDeviceFS,(uint8_t *)&keyboardhid,sizeof(keyboardhid));
-	  HAL_Delay(1000);
+	  HAL_Delay(1000);*/
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
