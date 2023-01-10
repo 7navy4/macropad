@@ -47,7 +47,7 @@ uint8_t testArr[20];
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define DEBOUNCE_DELAY  250 // Debounce time in milliseconds
+#define DEBOUNCE_TIME_MS  20 // Debounce time in milliseconds
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -127,7 +127,7 @@ int main(void)
 
   ssd1306_Fill(Black);
   ssd1306_UpdateScreen(&hi2c1);
- SSD1306_DrawBitmap(0,0,logoerl,128,64,1);
+  SSD1306_DrawBitmap(0,0,logoerl,128,64,1);
   ssd1306_UpdateScreen(&hi2c1);/*
   ssd1306_Fill(Black);
   SSD1306_DrawBitmap(0,0,logo,128,64,1);
@@ -289,46 +289,30 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
-	/*	uint32_t current_time = HAL_GetTick();
+	 uint32_t current_time = HAL_GetTick();
 
 	  if (current_time < last_debounce_time + DEBOUNCE_TIME_MS)
 	  {
 	    // Debounce period not yet expired, so return without updating the count
 	    return;
 	  }
-	if (GPIO_Pin == GPIO_PIN_8)
+	  if (GPIO_Pin == GPIO_PIN_8)
 	  {
 	    // Check the state of the PB15 pin
 	    if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_15) == GPIO_PIN_SET)
 	    {
 	      // PB15 is high, so this is a clockwise rotation
-	      test++;
+	      test--;
 	    }
 	    else
 	    {
 	      // PB15 is low, so this is a counterclockwise rotation
-	      test--;
+	      test++;
 	    }
 
-	    last_debounce_time = current_time;
-	  }*/
-	  uint32_t currentTime = HAL_GetTick();
-	  if (currentTime - lastEncoderTime > DEBOUNCE_DELAY) {
-		  if (GPIO_Pin == GPIO_PIN_8) {
-			  if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_15) == GPIO_PIN_SET) {
-				  test++;
-			  } else {
-				  test--;
-			  }
-		  } else if (GPIO_Pin == GPIO_PIN_15) {
-			  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8) == GPIO_PIN_SET) {
-				  test--;
-			  } else {
-				  test++;
-			  }
-		  }
-		  lastEncoderTime = currentTime;
+	   last_debounce_time = current_time;
 	  }
+
 }
 /* USER CODE END 4 */
 
