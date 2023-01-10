@@ -29,6 +29,7 @@
 
 #include "ssd1306.h"
 #include "fonts.h"
+#include "logo.h"
 
 
 /* USER CODE END Includes */
@@ -37,16 +38,22 @@
 /* USER CODE BEGIN PTD */
 extern USBD_HandleTypeDef hUsbDeviceFS;
 extern keyboardHID keyboardhid;
-uint32_t test;
+volatile uint32_t test=0;
+volatile uint32_t last_debounce_time = 0;
+volatile uint8_t update_count = 0;
+volatile uint32_t lastEncoderTime = 0;
+uint8_t testArr[20];
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define DEBOUNCE_DELAY  250 // Debounce time in milliseconds
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
 uint8_t scanNumberTest;
+
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -118,10 +125,16 @@ int main(void)
   ssd1306_SetCursor(0, 36);
   ssd1306_WriteString("4ilo", Font_11x18, White);
 
+  ssd1306_Fill(Black);
   ssd1306_UpdateScreen(&hi2c1);
-
+ SSD1306_DrawBitmap(0,0,logoerl,128,64,1);
+  ssd1306_UpdateScreen(&hi2c1);/*
+  ssd1306_Fill(Black);
+  SSD1306_DrawBitmap(0,0,logo,128,64,1);
+  ssd1306_UpdateScreen(&hi2c1);*/
   test=0;
-
+  ssd1306_Fill(Black);
+   ssd1306_UpdateScreen(&hi2c1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -129,7 +142,18 @@ int main(void)
   while (1)
   {
 
+/*	  if(test>1000){
+		  test=10;
+	  }
+	  if(test>10){
+		  test=1;
+	  }*/
 
+	  ssd1306_SetCursor(20, 32);
+	  ssd1306_Fill(Black);
+	  sprintf(testArr,"%d",test);
+	  ssd1306_WriteString(testArr, Font_11x18, White);
+	  ssd1306_UpdateScreen(&hi2c1);
 	 scanNumberTest=scan();
 /*
 
@@ -243,14 +267,14 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pins : PB13 PB14 PB15 */
   GPIO_InitStruct.Pin = GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PA8 */
   GPIO_InitStruct.Pin = GPIO_PIN_8;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /* EXTI interrupt init*/
@@ -265,16 +289,46 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
+	/*	uint32_t current_time = HAL_GetTick();
 
-		if(GPIO_Pin == GPIO_PIN_8){
-						test++;
-			}if(GPIO_Pin == GPIO_PIN_15){
-				test++;
-	}if(GPIO_Pin == GPIO_PIN_14){
-		test++;
-	}if(GPIO_Pin == GPIO_PIN_13){
-		test++;
-	}
+	  if (current_time < last_debounce_time + DEBOUNCE_TIME_MS)
+	  {
+	    // Debounce period not yet expired, so return without updating the count
+	    return;
+	  }
+	if (GPIO_Pin == GPIO_PIN_8)
+	  {
+	    // Check the state of the PB15 pin
+	    if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_15) == GPIO_PIN_SET)
+	    {
+	      // PB15 is high, so this is a clockwise rotation
+	      test++;
+	    }
+	    else
+	    {
+	      // PB15 is low, so this is a counterclockwise rotation
+	      test--;
+	    }
+
+	    last_debounce_time = current_time;
+	  }*/
+	  uint32_t currentTime = HAL_GetTick();
+	  if (currentTime - lastEncoderTime > DEBOUNCE_DELAY) {
+		  if (GPIO_Pin == GPIO_PIN_8) {
+			  if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_15) == GPIO_PIN_SET) {
+				  test++;
+			  } else {
+				  test--;
+			  }
+		  } else if (GPIO_Pin == GPIO_PIN_15) {
+			  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8) == GPIO_PIN_SET) {
+				  test--;
+			  } else {
+				  test++;
+			  }
+		  }
+		  lastEncoderTime = currentTime;
+	  }
 }
 /* USER CODE END 4 */
 
