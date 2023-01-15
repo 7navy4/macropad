@@ -829,7 +829,7 @@ Discarded input sections
  .text.Next     0x0000000000000000       0x30 ./Core/drivers/menu.o
  .text.Prev     0x0000000000000000       0x26 ./Core/drivers/menu.o
  .text.MenuTransition
-                0x0000000000000000       0x38 ./Core/drivers/menu.o
+                0x0000000000000000       0x5c ./Core/drivers/menu.o
  .debug_info    0x0000000000000000      0x3b8 ./Core/drivers/menu.o
  .debug_abbrev  0x0000000000000000      0x187 ./Core/drivers/menu.o
  .debug_aranges
@@ -889,10 +889,10 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x10 ./Core/drivers/menu.o
  .debug_macro   0x0000000000000000       0x35 ./Core/drivers/menu.o
  .debug_macro   0x0000000000000000       0x20 ./Core/drivers/menu.o
- .debug_line    0x0000000000000000      0x91f ./Core/drivers/menu.o
+ .debug_line    0x0000000000000000      0x925 ./Core/drivers/menu.o
  .debug_str     0x0000000000000000    0x81b59 ./Core/drivers/menu.o
  .comment       0x0000000000000000       0x51 ./Core/drivers/menu.o
- .debug_frame   0x0000000000000000      0x1a0 ./Core/drivers/menu.o
+ .debug_frame   0x0000000000000000      0x19c ./Core/drivers/menu.o
  .ARM.attributes
                 0x0000000000000000       0x2d ./Core/drivers/menu.o
  .group         0x0000000000000000        0xc ./Core/drivers/ssd1306.o
