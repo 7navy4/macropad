@@ -11,12 +11,40 @@
 #include "string.h"
 
 
-struct level  *currentM;
-
+struct level  mainM,*currentM;
 struct level buttonM,displayM,modeM;
-struct level allM,pressedM;
-struct level kicadM,eagleM,photoshopM,premiereM,customM;
-struct level scroll;
+struct level scrollM;
+
+
+char *displayButtons[] ={"All","Pressed"};
+char *displayModes[]   ={"Kicad","Eagle","Phtshop","Premiere","Custom"};
+
+
+void InitMenu(){
+	/*--------------------------------------------------------------------------------*/
+	BuildMenu(&buttonM, "Button", executeButton, &mainM, &displayM, &scrollM, &scrollM);
+	BuildMenu(&scrollM, "Scroll", executeScroll, &mainM, 0, &buttonM, &buttonM);
+	/*--------------------------------------------------------------------------------*/
+
+	/*--------------------------------------------------------------------------------*/
+	BuildMenu(&displayM, "Display", executeDisplay, &buttonM, 0, &modeM, &modeM);
+	BuildMenu(&modeM, 	"Mode", executeMode, &buttonM, 0, &displayM, &displayM);
+	/*--------------------------------------------------------------------------------*/
+}
+
+void executeButton(){
+
+}
+
+void executeScroll(){
+
+}
+void executeDisplay(){
+
+}
+void executeMode(){
+
+}
 
 void BuildMenu(struct level *currentNode, char name[16], void (*execute)(void) , struct level *prevNode, struct level *nextNode,struct level *upNode,struct level *downNode)
 {
@@ -27,7 +55,6 @@ void BuildMenu(struct level *currentNode, char name[16], void (*execute)(void) ,
     currentNode->down = downNode;
     currentNode->execute = execute;
 }
-
 
 void Up(struct level **currentNode)
 {
@@ -45,7 +72,7 @@ void Next(struct level **currentNode)
 {
 	if((*currentNode)->execute != 0)
 	{
-		//ExecuteTask((*currentNode)->execute);
+		(*currentNode)->execute;
 	}
 	else if((*currentNode)->next != 0)
 	{
@@ -60,9 +87,6 @@ void Prev(struct level **currentNode)
 }
 
 
-void ExecuteTask(struct level *currentNode){
-
-}
 
 void MenuTransition(uint8_t task){
 

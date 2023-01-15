@@ -22,4 +22,11 @@ struct level {
 
 typedef enum task{idleE,upE,downE,nextE,prevE};
 
+void BuildMenu(struct level *currentNode, char name[16], void (*execute)(void) , struct level *prevNode, struct level *nextNode,struct level *upNode,struct level *downNode);
+void executeButton(void);
+void executeScroll(void);
+void executeDisplay(void);
+void executeMode(void);
+
+
 #endif /* DRIVERS_MENU_H_ */
