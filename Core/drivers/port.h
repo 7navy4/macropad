@@ -11,6 +11,8 @@
 #include "main.h"
 
 
+extern I2C_HandleTypeDef hi2c1;
+
 #define SetOut			GPIO_PIN_SET
 #define ResetOut		GPIO_PIN_RESET
 
@@ -33,6 +35,7 @@
 #define PinColumn4			GPIO_PIN_1
 
 
+#define hi2cScreen			hi2c1
 
 
 

@@ -31,6 +31,7 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -41,6 +42,10 @@ extern "C" {
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
 
+
+uint8_t cursorPosition,topMenuPosition,bottomMenuPosition;
+uint8_t Button,rotary1Counter,rotary2Counter;
+volatile uint32_t last_debounce_time;
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/
@@ -53,6 +58,7 @@ void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
 
+void systemInit(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/

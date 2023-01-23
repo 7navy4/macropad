@@ -43,8 +43,11 @@ void resetcolumn(uint8_t columnNumber){
 
 uint8_t scan(){
 	uint8_t pressedButton=0;
+
 	for(int i=0; i<ColumnNumber;i++)
 	{
+
+		HAL_Delay(1);
 		setcolumn(i);
 		for(int j=0;j<RowNumber;j++)
 		{
@@ -52,9 +55,12 @@ uint8_t scan(){
 			{
 				pressedButton=j*4+i+1;
 				resetcolumn(i);
+				HAL_Delay(1);
 				return pressedButton;
+
 			}
 
+			HAL_Delay(1);
 		}
 		resetcolumn(i);
 	}

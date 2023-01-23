@@ -10,6 +10,7 @@
 
 #include "main.h"
 #include "usb_device.h"
+#include "usbd_hid.h"
 #include "port.h"
 
 
@@ -88,10 +89,10 @@ typedef struct
 }keyboardHID;
 
 
+uint8_t scan(void);
 GPIO_PinState rowread(uint8_t rowNumber);
 void setcolumn(uint8_t columnNumber);
 void resetcolumn(uint8_t columnNumber);
-uint8_t scan(void);
 void keystroke(uint8_t key, uint8_t modifier);
 
 #endif /* KEYBOARD_H_ */

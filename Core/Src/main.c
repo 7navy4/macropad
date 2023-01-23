@@ -22,7 +22,10 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+
 #include "usbd_hid.h"
+
+
 #include "keyboard.h"
 #include "port.h"
 
@@ -31,18 +34,13 @@
 #include "fonts.h"
 #include "logo.h"
 
+#include "menu.h"
+
 
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-extern USBD_HandleTypeDef hUsbDeviceFS;
-extern keyboardHID keyboardhid;
-volatile uint32_t test=0;
-volatile uint32_t last_debounce_time = 0;
-volatile uint8_t update_count = 0;
-volatile uint32_t lastEncoderTime = 0;
-uint8_t testArr[20];
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -52,7 +50,6 @@ uint8_t testArr[20];
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-uint8_t scanNumberTest;
 
 /* USER CODE END PM */
 
@@ -73,6 +70,8 @@ static void MX_I2C1_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
+extern USBD_HandleTypeDef hUsbDeviceFS;
+extern keyboardHID keyboardhid;
 /* USER CODE END 0 */
 
 /**
@@ -107,34 +106,9 @@ int main(void)
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
 
-  if (ssd1306_Init(&hi2c1) != 0) {
-    Error_Handler();
-  }
-  HAL_Delay(1000);
+  systemInit();
 
-  ssd1306_Fill(Black);
-  ssd1306_UpdateScreen(&hi2c1);
-  HAL_Delay(1000);
 
-  // Write data to local screenbuffer
-  ssd1306_SetCursor(0, 0);
-  ssd1306_WriteString("12345678912345", Font_11x18, White);
-
-  ssd1306_UpdateScreen(&hi2c1);
-
-  ssd1306_SetCursor(0, 36);
-  ssd1306_WriteString("4ilo", Font_11x18, White);
-
-  ssd1306_Fill(Black);
-  ssd1306_UpdateScreen(&hi2c1);
-  SSD1306_DrawBitmap(0,0,logoerl,128,64,1);
-  ssd1306_UpdateScreen(&hi2c1);/*
-  ssd1306_Fill(Black);
-  SSD1306_DrawBitmap(0,0,logo,128,64,1);
-  ssd1306_UpdateScreen(&hi2c1);*/
-  test=0;
-  ssd1306_Fill(Black);
-   ssd1306_UpdateScreen(&hi2c1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -142,28 +116,8 @@ int main(void)
   while (1)
   {
 
-/*	  if(test>1000){
-		  test=10;
-	  }
-	  if(test>10){
-		  test=1;
-	  }*/
+	  Button=scan();
 
-	  ssd1306_SetCursor(20, 32);
-	  ssd1306_Fill(Black);
-	  sprintf(testArr,"%d",test);
-	  ssd1306_WriteString(testArr, Font_11x18, White);
-	  ssd1306_UpdateScreen(&hi2c1);
-	 scanNumberTest=scan();
-/*
-
-	  //push left shift a and b at the same time
-	  keyboardhid.KEYKODE1=0x05;//press 'a'
-	  USBD_HID_SendReport(&hUsbDeviceFS, (uint8_t *)&keyboardhid, sizeof(keyboardhid));
-	  HAL_Delay(50);
-	  keyboardhid.KEYKODE1=0x00;//release key
-	  USBD_HID_SendReport(&hUsbDeviceFS,(uint8_t *)&keyboardhid,sizeof(keyboardhid));
-	  HAL_Delay(1000);*/
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -262,8 +216,34 @@ static void MX_GPIO_Init(void)
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOD_CLK_ENABLE();
-  __HAL_RCC_GPIOB_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6|GPIO_PIN_7, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0|GPIO_PIN_1, GPIO_PIN_RESET);
+
+  /*Configure GPIO pins : PA6 PA7 */
+  GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_7;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PB0 PB1 */
+  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PB2 PB10 PB11 */
+  GPIO_InitStruct.Pin = GPIO_PIN_2|GPIO_PIN_10|GPIO_PIN_11;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PB13 PB14 PB15 */
   GPIO_InitStruct.Pin = GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15;
@@ -287,31 +267,58 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+void systemInit()
+{
+	  ssd1306_Init(&hi2cScreen);
+	  ssd1306_Fill(Black);
+	  ssd1306_UpdateScreen(&hi2cScreen);
+	  cursorPosition 	 = 1;
+	  topMenuPosition 	 = 1;
+	  bottomMenuPosition = 3;
+	  Button		 	 = 0;
+	  rotary1Counter	 = 0;
+	  rotary2Counter	 = 0;
+	  last_debounce_time = 0;
+	  InitMenu();
+	  currentM=&modeM;
+}
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
-	 uint32_t current_time = HAL_GetTick();
+	 uint32_t currentTime = HAL_GetTick();
 
-	  if (current_time < last_debounce_time + DEBOUNCE_TIME_MS)
+	  if (currentTime < last_debounce_time + DEBOUNCE_TIME_MS)
 	  {
 	    // Debounce period not yet expired, so return without updating the count
 	    return;
 	  }
+
 	  if (GPIO_Pin == GPIO_PIN_8)
 	  {
-	    // Check the state of the PB15 pin
 	    if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_15) == GPIO_PIN_SET)
 	    {
-	      // PB15 is high, so this is a clockwise rotation
-	      test--;
+	    	rotary1Counter--;
 	    }
 	    else
 	    {
-	      // PB15 is low, so this is a counterclockwise rotation
-	      test++;
+	    	rotary1Counter++;
 	    }
 
-	   last_debounce_time = current_time;
+	   last_debounce_time = currentTime;
 	  }
+
+	  if (GPIO_Pin == GPIO_PIN_14)
+	  {
+	    if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_13) == GPIO_PIN_SET)
+	    {
+	    	rotary2Counter--;
+	    }
+	    else
+	    {
+	    	rotary2Counter++;
+	    }
+
+	   last_debounce_time = currentTime;
+	  }
+
 
 }
 /* USER CODE END 4 */
