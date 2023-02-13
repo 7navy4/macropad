@@ -43,9 +43,37 @@ extern "C" {
 /* USER CODE BEGIN EC */
 
 
-uint8_t cursorPosition,topMenuPosition,bottomMenuPosition;
-uint8_t Button,rotary1Counter,rotary2Counter;
-volatile uint32_t last_debounce_time;
+uint8_t cursorPosition,topMenuPosition,bottomMenuPosition,nodeTransition;
+uint8_t DisplayOption,ButtonMode;
+uint32_t Button,rotary1Counter,rotary2Counter,prevRotary1Counter;
+volatile uint32_t lastDebounceTime,menuEnterStartTime;
+
+
+#define menuDebounceTime			1000
+#define ButtonDebounceTime 			350
+#define TransitionDelayCount		2
+
+
+typedef enum{
+	DisplayAll,
+	DisplayPressed
+}Dmode;
+
+typedef enum{
+	ModeEagle,
+	ModeKicad,
+	ModePhotoshop,
+	ModePremiere,
+	ModeCustom1,
+	ModeCustom2,
+	ModeCustom3
+}Bmode;
+
+
+
+uint8_t pressedButton,menuFlag,buttonMode;
+
+
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/
@@ -59,6 +87,7 @@ void Error_Handler(void);
 /* USER CODE BEGIN EFP */
 
 void systemInit(void);
+void systemControl(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/

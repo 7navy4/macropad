@@ -9,8 +9,25 @@
 #include "keyboard.h"
 
 
+uint8_t modeEagle[12][7] = {
+		{KeyD, KeyI, KeyS, KeyP, KeyL, KeyA, KeyY},
+		{KeyG, KeyR, KeyO, KeyU, KeyP},
+		{KeyM, KeyO, KeyV, KeyE},
+		{KeyM, KeyI, KeyR, KeyR, KeyO, KeyR},
+		{KeyR, KeyO, KeyT, KeyA, KeyT, KeyE},
+		{KeyA, KeyL, KeyI, KeyG, KeyN},
+		{KeyC, KeyO, KeyP, KeyY},
+		{KeyP, KeyA, KeyS, KeyT, KeyE},
+		{KeyD, KeyE, KeyL, KeyE, KeyT, KeyE},
+		{KeyR, KeyO, KeyU, KeyT, KeyE},
+		{KeyR, KeyI, KeyP, KeyU, KeyP},
+		{KeyH, KeyO, KeyL, KeyE},
 
+};
 
+uint8_t modeKicad[1][1] = {
+0
+};
 static uint16_t rowPin[RowNumber]={PinRow1,PinRow2,PinRow3};
 static uint16_t columnPin[ColumnNumber]={PinColumn1,PinColumn2,PinColumn3,PinColumn4};
 static GPIO_TypeDef *rowPort[RowNumber]={PortRow1,PortRow2,PortRow1};
@@ -55,12 +72,11 @@ uint8_t scan(){
 			{
 				pressedButton=j*4+i+1;
 				resetcolumn(i);
-				HAL_Delay(1);
 				return pressedButton;
 
 			}
 
-			HAL_Delay(1);
+			for(volatile int i=0; i<100;i++);
 		}
 		resetcolumn(i);
 	}
@@ -81,7 +97,10 @@ void keystroke(uint8_t key, uint8_t modifier){
 	  USBD_HID_SendReport(&hUsbDeviceFS,(uint8_t *)&keyboardhid,sizeof(keyboardhid));
 }
 
+void ButtonControl()
+{
 
+}
 
 
 

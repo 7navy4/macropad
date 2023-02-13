@@ -115,9 +115,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-
-	  Button=scan();
-
+	  systemControl();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -257,6 +255,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
+  /*Configure GPIO pins : PA9 PA10 */
+  GPIO_InitStruct.Pin = GPIO_PIN_9|GPIO_PIN_10;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
@@ -278,14 +282,25 @@ void systemInit()
 	  Button		 	 = 0;
 	  rotary1Counter	 = 0;
 	  rotary2Counter	 = 0;
-	  last_debounce_time = 0;
+	  lastDebounceTime = 0;
+	  nodeTransition = idleE;
+	  DisplayOption = DisplayAll;
 	  InitMenu();
-	  currentM=&modeM;
+	  currentM=&buttonM;
+}
+
+void systemControl()
+{
+	buttonControl();
+	encoderControl();
+	displayControl();
+
+
 }
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
 	 uint32_t currentTime = HAL_GetTick();
 
-	  if (currentTime < last_debounce_time + DEBOUNCE_TIME_MS)
+	  if (currentTime < lastDebounceTime + DEBOUNCE_TIME_MS)
 	  {
 	    // Debounce period not yet expired, so return without updating the count
 	    return;
@@ -302,7 +317,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
 	    	rotary1Counter++;
 	    }
 
-	   last_debounce_time = currentTime;
+	   lastDebounceTime = currentTime;
 	  }
 
 	  if (GPIO_Pin == GPIO_PIN_14)
@@ -316,7 +331,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
 	    	rotary2Counter++;
 	    }
 
-	   last_debounce_time = currentTime;
+	   lastDebounceTime = currentTime;
 	  }
 
 

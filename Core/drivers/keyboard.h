@@ -18,8 +18,8 @@
 #define ColumnNumber	4
 
 
-
 typedef enum key{
+	KeyNone = 0x00,
 	KeyA = 0x04,
 	KeyB,
 	KeyC,
@@ -71,9 +71,23 @@ typedef enum key{
 	Lctrl	=	0b00000001
 
 };
+/*
 
+uint8_t modeEagle[12][7] = {
+		{KeyD, KeyI, KeyS, KeyP, KeyL, KeyA, KeyY},
+		{KeyG, KeyR, KeyO, KeyU, KeyP},
+		{KeyM, KeyO, KeyV, KeyE},
+		{KeyM, KeyI, KeyR, KeyR, KeyO, KeyR},
+		{KeyR, KeyO, KeyT, KeyA, KeyT, KeyE},
+		{KeyA, KeyL, KeyI, KeyG, KeyN},
+		{KeyC, KeyO, KeyP, KeyY},
+		{KeyP, KeyA, KeyS, KeyT, KeyE},
+		{KeyD, KeyE, KeyL, KeyE, KeyT, KeyE},
+		{KeyR, KeyO, KeyU, KeyT, KeyE},
+		{KeyR, KeyI, KeyP, KeyU, KeyP},
+		{KeyH, KeyO, KeyL, KeyE},
 
-
+};*/
 
 
 typedef struct
@@ -94,5 +108,6 @@ GPIO_PinState rowread(uint8_t rowNumber);
 void setcolumn(uint8_t columnNumber);
 void resetcolumn(uint8_t columnNumber);
 void keystroke(uint8_t key, uint8_t modifier);
+
 
 #endif /* KEYBOARD_H_ */

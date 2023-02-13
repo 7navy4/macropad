@@ -253,3 +253,4 @@ void ssd1306_SetCursor(uint8_t x, uint8_t y)
     SSD1306.CurrentX = x+1;
     SSD1306.CurrentY = y;
 }
+
