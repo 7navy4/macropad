@@ -5,6 +5,7 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../Core/drivers/eeprom.c \
 ../Core/drivers/fonts.c \
 ../Core/drivers/keyboard.c \
 ../Core/drivers/logo.c \
@@ -12,6 +13,7 @@ C_SRCS += \
 ../Core/drivers/ssd1306.c 
 
 OBJS += \
+./Core/drivers/eeprom.o \
 ./Core/drivers/fonts.o \
 ./Core/drivers/keyboard.o \
 ./Core/drivers/logo.o \
@@ -19,6 +21,7 @@ OBJS += \
 ./Core/drivers/ssd1306.o 
 
 C_DEPS += \
+./Core/drivers/eeprom.d \
 ./Core/drivers/fonts.d \
 ./Core/drivers/keyboard.d \
 ./Core/drivers/logo.d \
@@ -33,7 +36,7 @@ Core/drivers/%.o Core/drivers/%.su: ../Core/drivers/%.c Core/drivers/subdir.mk
 clean: clean-Core-2f-drivers
 
 clean-Core-2f-drivers:
-	-$(RM) ./Core/drivers/fonts.d ./Core/drivers/fonts.o ./Core/drivers/fonts.su ./Core/drivers/keyboard.d ./Core/drivers/keyboard.o ./Core/drivers/keyboard.su ./Core/drivers/logo.d ./Core/drivers/logo.o ./Core/drivers/logo.su ./Core/drivers/menu.d ./Core/drivers/menu.o ./Core/drivers/menu.su ./Core/drivers/ssd1306.d ./Core/drivers/ssd1306.o ./Core/drivers/ssd1306.su
+	-$(RM) ./Core/drivers/eeprom.d ./Core/drivers/eeprom.o ./Core/drivers/eeprom.su ./Core/drivers/fonts.d ./Core/drivers/fonts.o ./Core/drivers/fonts.su ./Core/drivers/keyboard.d ./Core/drivers/keyboard.o ./Core/drivers/keyboard.su ./Core/drivers/logo.d ./Core/drivers/logo.o ./Core/drivers/logo.su ./Core/drivers/menu.d ./Core/drivers/menu.o ./Core/drivers/menu.su ./Core/drivers/ssd1306.d ./Core/drivers/ssd1306.o ./Core/drivers/ssd1306.su
 
 .PHONY: clean-Core-2f-drivers
 

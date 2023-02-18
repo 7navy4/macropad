@@ -73,7 +73,6 @@ static void MX_I2C1_Init(void);
 extern USBD_HandleTypeDef hUsbDeviceFS;
 extern keyboardHID keyboardhid;
 /* USER CODE END 0 */
-
 /**
   * @brief  The application entry point.
   * @retval int
@@ -115,6 +114,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+
 	  systemControl();
     /* USER CODE END WHILE */
 
@@ -273,6 +273,8 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 void systemInit()
 {
+	  EE_Init();
+	  EE_ReadEeprom();
 	  ssd1306_Init(&hi2cScreen);
 	  ssd1306_Fill(Black);
 	  ssd1306_UpdateScreen(&hi2cScreen);
@@ -283,6 +285,8 @@ void systemInit()
 	  rotary1Counter	 = 0;
 	  rotary2Counter	 = 0;
 	  lastDebounceTime = 0;
+	  menuFlag = 0;
+	  displayFlag = 1;
 	  nodeTransition = idleE;
 	  DisplayOption = DisplayAll;
 	  InitMenu();

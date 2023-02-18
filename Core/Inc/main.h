@@ -42,17 +42,25 @@ extern "C" {
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
 
+#define DisplayRowSize		12
+#define DisplayColumnSize	7
 
 uint8_t cursorPosition,topMenuPosition,bottomMenuPosition,nodeTransition;
-uint8_t DisplayOption,ButtonMode;
+uint16_t DisplayOption,ButtonMode;
 uint32_t Button,rotary1Counter,rotary2Counter,prevRotary1Counter;
-volatile uint32_t lastDebounceTime,menuEnterStartTime;
+char DisplayBuffer[DisplayRowSize][DisplayColumnSize];
+volatile uint32_t lastDebounceTime,menuEnterStartTime,displayStartTime;
 
 
 #define menuDebounceTime			1000
 #define ButtonDebounceTime 			350
 #define TransitionDelayCount		2
+#define ButtonDisplayTime			500
 
+typedef enum{
+	DisplayOptionAddres,
+	ButtonModeAddres
+}EeAddresses;
 
 typedef enum{
 	DisplayAll,
@@ -71,7 +79,7 @@ typedef enum{
 
 
 
-uint8_t pressedButton,menuFlag,buttonMode;
+uint8_t pressedButton,menuFlag,displayFlag,updateFlag, buttonMode;
 
 
 /* USER CODE END EC */

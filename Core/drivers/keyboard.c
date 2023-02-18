@@ -9,7 +9,7 @@
 #include "keyboard.h"
 
 
-uint8_t modeEagle[12][7] = {
+uint8_t modeEagleKeys[DisplayRowSize][DisplayColumnSize] = {
 		{KeyD, KeyI, KeyS, KeyP, KeyL, KeyA, KeyY},
 		{KeyG, KeyR, KeyO, KeyU, KeyP},
 		{KeyM, KeyO, KeyV, KeyE},
@@ -22,6 +22,12 @@ uint8_t modeEagle[12][7] = {
 		{KeyR, KeyO, KeyU, KeyT, KeyE},
 		{KeyR, KeyI, KeyP, KeyU, KeyP},
 		{KeyH, KeyO, KeyL, KeyE},
+
+};
+char  modeEagleNames[DisplayRowSize][DisplayColumnSize] = {
+		{"Dp"}, {"Gr"}, {"Mv"}, {"Mr"},
+		{"Rt"}, {"Al"}, {"Cp"}, {"Pt"},
+		{"Dl"}, {"Rt"}, {"Rp"}, {"Hl"}
 
 };
 
@@ -89,18 +95,15 @@ uint8_t scan(){
 
 void keystroke(uint8_t key, uint8_t modifier){
 	  keyboardhid.MODIFIER=modifier;
-	  keyboardhid.KEYKODE1=key;//press 'a'
+	  keyboardhid.KEYKODE1=key;
 	  USBD_HID_SendReport(&hUsbDeviceFS, (uint8_t *)&keyboardhid, sizeof(keyboardhid));
 	  HAL_Delay(5);
-	  keyboardhid.KEYKODE1=0x00;//release key
+	  keyboardhid.KEYKODE1=0x00;
 	  keyboardhid.MODIFIER=0x00;
 	  USBD_HID_SendReport(&hUsbDeviceFS,(uint8_t *)&keyboardhid,sizeof(keyboardhid));
 }
 
-void ButtonControl()
-{
 
-}
 
 
 

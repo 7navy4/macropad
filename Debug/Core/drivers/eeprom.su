@@ -1,0 +1,9 @@
+../Core/drivers/eeprom.c:65:6:EE_ReadEeprom	8	static
+../Core/drivers/eeprom.c:83:10:EE_Init	48	static
+../Core/drivers/eeprom.c:336:10:EE_VerifyPageFullyErased	24	static
+../Core/drivers/eeprom.c:374:10:EE_ReadVariable	32	static
+../Core/drivers/eeprom.c:433:10:EE_WriteVariable	24	static
+../Core/drivers/eeprom.c:457:26:EE_Format	32	static
+../Core/drivers/eeprom.c:508:17:EE_FindValidPage	24	static
+../Core/drivers/eeprom.c:580:17:EE_VerifyPageFullWriteVariable	48	static
+../Core/drivers/eeprom.c:641:17:EE_PageTransfer	56	static

@@ -16,6 +16,10 @@
 /*------------------------------------------------------------------------------------*/
 
 /*------------------------------------------------------------------------------------*/
+extern char  modeEagleNames[DisplayRowSize][DisplayColumnSize] ;
+extern char  modeEagleKeys[DisplayRowSize][DisplayColumnSize] ;
+
+
 /*------------------------------------------------------------------------------------*/
 
 
@@ -79,6 +83,7 @@ void executeMode(){
 void executeAll()
 {
 	DisplayOption = DisplayAll;
+	EE_WriteVariable(DisplayOptionAddres, DisplayOption);
 	DisplaySaved();
 }
 /*------------------------------------------------------------------------------------*/
@@ -87,6 +92,7 @@ void executeAll()
 void executePressed()
 {
 	DisplayOption = DisplayPressed;
+	EE_WriteVariable(DisplayOptionAddres, DisplayOption);
 	DisplaySaved();
 }
 /*------------------------------------------------------------------------------------*/
@@ -95,6 +101,7 @@ void executePressed()
 void executeEagle()
 {
 	ButtonMode = ModeEagle;
+	EE_WriteVariable(DisplayOptionAddres, ButtonMode);
 	DisplaySaved();
 }
 /*------------------------------------------------------------------------------------*/
@@ -103,6 +110,7 @@ void executeEagle()
 void executeKicad()
 {
 	ButtonMode = ModeKicad;
+	EE_WriteVariable(DisplayOptionAddres, ButtonMode);
 	DisplaySaved();
 }
 /*------------------------------------------------------------------------------------*/
@@ -111,6 +119,7 @@ void executeKicad()
 void executePhotoshop()
 {
 	ButtonMode = ModePhotoshop;
+	EE_WriteVariable(DisplayOptionAddres, ButtonMode);
 	DisplaySaved();
 }
 /*------------------------------------------------------------------------------------*/
@@ -119,6 +128,7 @@ void executePhotoshop()
 void executePremiere()
 {
 	ButtonMode = ModePremiere;
+	EE_WriteVariable(DisplayOptionAddres, ButtonMode);
 	DisplaySaved();
 }
 /*------------------------------------------------------------------------------------*/
@@ -127,6 +137,7 @@ void executePremiere()
 void executeCustom1()
 {
 	ButtonMode = ModeCustom1;
+	EE_WriteVariable(DisplayOptionAddres, ButtonMode);
 	DisplaySaved();
 }
 /*------------------------------------------------------------------------------------*/
@@ -135,6 +146,7 @@ void executeCustom1()
 void executeCustom2()
 {
 	ButtonMode = ModeCustom2;
+	EE_WriteVariable(DisplayOptionAddres, ButtonMode);
 	DisplaySaved();
 }
 /*------------------------------------------------------------------------------------*/
@@ -143,6 +155,7 @@ void executeCustom2()
 void executeCustom3()
 {
 	ButtonMode = ModeCustom2;
+	EE_WriteVariable(DisplayOptionAddres, ButtonMode);
 	DisplaySaved();
 }
 /*------------------------------------------------------------------------------------*/
@@ -330,9 +343,15 @@ void upMenuItem(struct level *currentNode){
 void buttonControl()
 {
 	pressedButton = scan();
-
-	//keystroke(key, modifier);
-
+	if(pressedButton != 0)
+	{
+		int i = 0;
+		while(modeEagleKeys[pressedButton-1][i] != NULL)
+		{
+			keystroke(modeEagleKeys[pressedButton-1][i], 0);
+			i++;
+		}
+	}
 
 }
 
@@ -390,40 +409,64 @@ void encoderControl(){
 void displayControl()
 {
 	if(menuFlag == 0){
-		if(DisplayOption == DisplayAll)
+		if(pressedButton != 0)
 		{
-
-		}else if(DisplayOption == DisplayPressed)
-		{
-
+			DisplayPressedButton();
+			displayFlag = 1;
 		}
-		if(ButtonMode == ModeEagle)
+		if(displayFlag == 1)
 		{
+			if(DisplayOption == DisplayAll)
+			{
+				DisplayItem(pressedButton);
+			}else if(DisplayOption == DisplayPressed)
+			{
 
-		}else if(ButtonMode == ModeEagle)
-		{
+			}
+			if(ButtonMode == ModeEagle)
+			{
 
-		}else if(ButtonMode == ModePhotoshop)
-		{
+			}else if(ButtonMode == ModeEagle)
+			{
 
-		}else if(ButtonMode == ModePremiere)
-		{
+			}else if(ButtonMode == ModePhotoshop)
+			{
 
-		}else if(ButtonMode == ModeCustom1)
-		{
+			}else if(ButtonMode == ModePremiere)
+			{
 
-		}else if(ButtonMode == ModeCustom2)
-		{
+			}else if(ButtonMode == ModeCustom1)
+			{
 
-		}else if(ButtonMode == ModeCustom3)
+			}else if(ButtonMode == ModeCustom2)
+			{
+
+			}else if(ButtonMode == ModeCustom3)
+			{
+
+			}
+			displayFlag = 0;
+		}
+		if(DisplayOption == DisplayPressed && HAL_GetTick() - displayStartTime > ButtonDisplayTime && updateFlag == 1)
 		{
+			updateFlag = 0;
+			ssd1306_Fill(Black);
+			ssd1306_UpdateScreen(&hi2cScreen);
 
 		}
 	}
 }
 
-void DisplaySaved(){
+void DisplayPressedButton(){
+	if(DisplayOption == DisplayAll)
+	{
 
+	}else if(DisplayOption == DisplayPressed)
+	{
+
+	}
+}
+void DisplaySaved(){
 	ssd1306_Fill(Black);
 	ssd1306_SetCursor(30, 20);
 	ssd1306_WriteString("Saved", Font_11x18, Black);
@@ -431,4 +474,22 @@ void DisplaySaved(){
 	HAL_Delay(750);
 	ssd1306_Fill(Black);
 
+}
+void DisplayItem(uint8_t Item)
+{
+	if(DisplayOption == DisplayAll)
+	{
+		for(int i = 0; i<DisplayRowSize; i++)
+		{
+			ssd1306_SetCursor(i%4*33, (i/4)*20);
+			ssd1306_WriteString(modeEagleNames[i], Font_11x18, i == pressedButton ? Black : White);
+			ssd1306_UpdateScreen(&hi2cScreen);
+		}
+	}else if(DisplayOption == DisplayPressed)
+	{
+		ssd1306_SetCursor(40, 20);
+		ssd1306_WriteString(modeEagleNames[pressedButton-1],Font_11x18, White);
+		displayStartTime = HAL_GetTick();
+	}
+	updateFlag = 1;
 }
